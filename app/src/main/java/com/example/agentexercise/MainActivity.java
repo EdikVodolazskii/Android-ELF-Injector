@@ -19,12 +19,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void load(View view) {
 
-
-        myUtility.loadLib("hello");
+        String absolutPath = getFilesDir().getAbsolutePath() + "/libhello.so";
+        myUtility.loadLib(absolutPath);
     }
 
     public void unload(View view) {
-        myUtility.unloadLib("hello");
+        String absolutPath = getFilesDir().getAbsolutePath() + "/libhello.so";
+        myUtility.unloadLib(absolutPath);
     }
 
     private void extractLib() {
