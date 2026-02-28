@@ -28,6 +28,12 @@ public class MainActivity extends AppCompatActivity {
         myUtility.unloadLib(absolutPath);
     }
 
+    public void patch(View view)
+    {
+        String absolutPath = getFilesDir().getAbsolutePath() + "/libhello.so";
+        myUtility.patchLib(absolutPath);
+    }
+
     private void extractLib() {
         try {
             java.io.InputStream is = getResources().openRawResource(R.raw.libhello);

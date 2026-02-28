@@ -7,4 +7,6 @@ public class Utility {
     public native void loadLib(String libPath);
 
     public native void unloadLib(String libPath);
+
+    public native void patchLib(String libPath);
 }

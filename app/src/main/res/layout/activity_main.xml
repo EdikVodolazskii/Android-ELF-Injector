@@ -24,5 +24,13 @@
         android:text="Unload"
         android:onClick="unload"
         />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnPatch"
+        android:layout_gravity="center"
+        android:text="Patch"
+        android:onClick="patch"
+        />
 
 </LinearLayout>

@@ -13,6 +13,31 @@ void* libHandle = nullptr;
 extern "C" {
 
 JNIEXPORT void JNICALL
+Java_com_example_agentexercise_Utility_patchLib(JNIEnv *env, jobject thiz, jstring lib_path)
+{
+    const char *path = env->GetStringUTFChars(lib_path, nullptr);
+
+    std::unique_ptr<LIEF::ELF::Binary> binary = LIEF::ELF::Parser::parse(path);
+
+    if (binary == nullptr)
+    {
+        LOGI("LIEF error log!!!");
+    }
+    else{
+        LOGI("The binary was parsed successfully!");
+    }
+
+    if (binary && !binary->has_library("libgadget.so")) {
+        binary->add_library("libgadget.so");
+        binary->write(path);
+
+        LOGI("LIEF patched and saved libhello.so!");
+    }
+
+    env->ReleaseStringUTFChars(lib_path, path);
+}
+
+JNIEXPORT void JNICALL
 Java_com_example_agentexercise_Utility_loadLib(JNIEnv *env, jobject thiz, jstring libPath) {
     LOGI("LIEF SDK Version: %s", LIEF_VERSION);
 
