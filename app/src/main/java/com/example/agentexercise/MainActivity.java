@@ -13,11 +13,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        extractLib();
+        extractLib("libhello.so", R.raw.libhello);
+        extractLib("libgadget.so", R.raw.libgadget);
     }
 
 
     public void load(View view) {
+
+        String gadgetPath = getFilesDir().getAbsolutePath() + "/libgadget.so";
+        myUtility.loadLib(gadgetPath);
 
         String absolutPath = getFilesDir().getAbsolutePath() + "/libhello.so";
         myUtility.loadLib(absolutPath);
@@ -28,16 +32,16 @@ public class MainActivity extends AppCompatActivity {
         myUtility.unloadLib(absolutPath);
     }
 
-    public void patch(View view)
-    {
+    public void patch(View view) {
         String absolutPath = getFilesDir().getAbsolutePath() + "/libhello.so";
         myUtility.patchLib(absolutPath);
     }
 
-    private void extractLib() {
+    private void extractLib(String libname, int resourceId) {
         try {
-            java.io.InputStream is = getResources().openRawResource(R.raw.libhello);
-            java.io.File outFile = new java.io.File(getFilesDir(), "libhello.so");
+
+            java.io.InputStream is = getResources().openRawResource(resourceId);
+            java.io.File outFile = new java.io.File(getFilesDir(), libname);
             java.io.FileOutputStream fos = new java.io.FileOutputStream(outFile);
 
             byte[] buffer = new byte[1024];
