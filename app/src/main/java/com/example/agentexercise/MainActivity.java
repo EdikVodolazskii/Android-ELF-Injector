@@ -17,9 +17,7 @@ public class MainActivity extends AppCompatActivity {
         extractLib("libgadget.so", R.raw.libgadget);
     }
 
-
     public void load(View view) {
-
         String gadgetPath = getFilesDir().getAbsolutePath() + "/libgadget.so";
         myUtility.loadLib(gadgetPath);
 
@@ -39,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void extractLib(String libname, int resourceId) {
         try {
-
             java.io.InputStream is = getResources().openRawResource(resourceId);
             java.io.File outFile = new java.io.File(getFilesDir(), libname);
             java.io.FileOutputStream fos = new java.io.FileOutputStream(outFile);
@@ -53,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
             fos.flush();
             fos.close();
             is.close();
+
+            outFile.setReadable(true, false);
+            outFile.setExecutable(true, false);
         } catch (Exception e) {
             e.printStackTrace();
         }
