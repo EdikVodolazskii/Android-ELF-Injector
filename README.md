@@ -63,12 +63,12 @@ Ensure your development environment is configured to communicate with the Frida 
 ### Step 2: Payload and Environment Setup
 1. Switch to the `exercise_7` branch, build, and install the application.
 2. Create a local file named `script.js` with the following test payload:
-```javascript
-Java.perform(function() {
-    var Log = Java.use('android.util.Log');
-    Log.d('AgentExercise', 'GREAT JOB !');
-});
-```
+   ```javascript
+   Java.perform(function() {
+       var Log = Java.use('android.util.Log');
+       Log.d('AgentExercise', 'GREAT JOB !');
+   });
+   ```
 
 ### Step 3: Execution
 1. Launch the application and tap **Patch**. This invokes LIEF to modify the binary on the device.
@@ -82,11 +82,31 @@ Java.perform(function() {
    ```
 
 **Expected Result:**
-<img width="1268" height="54" alt="image" src="https://github.com/user-attachments/assets/13b00800-b0e5-475b-91be-b9d6eb980a16" />
+
+```log
+FridaLog                com.example.agentexercise            D  GREAT JOB !
+```
 
 Monitor the Android Logcat for the tag `AgentExercise`. The appearance of the message **`GREAT JOB !`** confirms that:
+
 1. The ELF binary was successfully patched.
 2. The Linker Namespace restriction was bypassed via pre-loading.
 3. The Frida Gadget successfully initialized and executed the JavaScript payload within the ART Virtual Machine.
-4. Frida is ready to work and execute scripts from the console line
-   <img width="1830" height="556" alt="image" src="https://github.com/user-attachments/assets/66df761d-b35d-4a94-8078-12d04941f7a5" />
+4. Frida is ready to work and execute scripts from the console line:
+
+```console
+     ____
+    / _  |   Frida 17.7.3 - A world-class dynamic instrumentation toolkit
+   | (_| |
+    > _  |   Commands:
+   /_/ |_|       help      -> Displays the help system
+   . . . .       object?   -> Display information about 'object'
+   . . . .       exit/quit -> Exit
+   . . . .
+   . . . .   More info at [https://frida.re/docs/home/](https://frida.re/docs/home/)
+   . . . .
+   . . . .   Connected to 127.0.0.1:27042 (id=socket@127.0.0.1:27042)
+
+[Remote::Gadget ]-> Java.perform(function() { console.log("Phone model: " + Java.use("android.os.Build").MODEL.value); })
+Phone model: sdk_gphone64_x86_64
+```
